@@ -4,7 +4,18 @@ from market import is_paid_polygon, is_realtime_polygon
 
 load_dotenv(override=True)
 
-brave_env = {"BRAVE_API_KEY": os.getenv("BRAVE_API_KEY")}
+# NPM 靜默設定 - 防止 npm 輸出干擾 MCP 的 JSON-RPC 通訊
+NPM_SILENT_ENV = {
+    "NPM_CONFIG_LOGLEVEL": "silent",
+    "NPM_CONFIG_UPDATE_NOTIFIER": "false",
+    "NPM_CONFIG_FUND": "false",
+    "NPM_CONFIG_AUDIT": "false",
+}
+
+brave_env = {
+    "BRAVE_API_KEY": os.getenv("BRAVE_API_KEY"),
+    **NPM_SILENT_ENV,
+}
 polygon_api_key = os.getenv("POLYGON_API_KEY")
 
 # The MCP server for the Trader to read Market Data
@@ -35,12 +46,12 @@ def researcher_mcp_server_params(name: str):
         {"command": "uvx", "args": ["mcp-server-fetch"]},
         {
             "command": "npx",
-            "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+            "args": ["--quiet", "-y", "@modelcontextprotocol/server-brave-search"],
             "env": brave_env,
         },
         {
             "command": "npx",
-            "args": ["-y", "mcp-memory-libsql"],
-            "env": {"LIBSQL_URL": f"file:./memory/{name}.db"},
+            "args": ["--quiet", "-y", "mcp-memory-libsql"],
+            "env": {"LIBSQL_URL": f"file:./memory/{name}.db", **NPM_SILENT_ENV},
         },
     ]
