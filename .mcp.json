@@ -6,6 +6,9 @@
       "env": {
         "NOTION_TOKEN": "ntn_b36767180324vgQZlrVpROM3S6TVK6P0crSdoYtHDxYgYm"
       }
+    },
+    "google": {
+      "command": "/home/pandemonium/projects/agents/tools/google-mcp-server"
     }
   }
 }
