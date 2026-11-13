@@ -4,7 +4,7 @@
       "command": "npx",
       "args": ["-y", "@notionhq/notion-mcp-server"],
       "env": {
-        "NOTION_TOKEN": "ntn_b36767180324vgQZlrVpROM3S6TVK6P0crSdoYtHDxYgYm"
+        "NOTION_TOKEN": "${NOTION_TOKEN}"
       }
     },
     "google": {
